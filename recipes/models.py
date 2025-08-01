@@ -8,6 +8,10 @@ class Recipe(models.Model):
     cooking_time = models.IntegerField(help_text="Cooking time in minutes")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    image = models.ImageField(upload_to='recipes/', blank=True, null=True)
 
     def __str__(self):
         return self.title
+    
+    class Meta:
+        verbose_name_plural = 'Recipes'

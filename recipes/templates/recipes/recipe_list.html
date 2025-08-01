@@ -11,9 +11,17 @@
     {% for recipe in recipes %}
         
         <h2>{{ recipe.title }}</h2>
+        
+        {% if recipe.image %}
+            <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}" style="max-width: 300px; max-height: 200px;">
+        {% else %}
+            <p><em>Imagem não disponível</em></p>
+        {% endif %}
+
         <p><strong>Tempo de Preparo: </strong>{{ recipe.cooking_time }} minutos</p>
         <p><strong>Ingredientes: </strong>{{ recipe.ingredients }}</p>
         <p><strong>Instruções: </strong>{{ recipe.instructions }}</p>
+        
         <hr>
 
     {% empty %}
