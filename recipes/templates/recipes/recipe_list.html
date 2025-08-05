@@ -4,28 +4,117 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Receitas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body{
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+            color: #1f2937;
+            line-height: 1.6;
+        }
+        .container{
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem; 
+            background-color: #ffffff; 
+            border-radius: 0.75rem; /*rounded-xl*/
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0,15), 0 2px 4px -1px rgba(0,0,0,0.06); /*shadow-md*/
+        }
+        h1{
+            color: #1f2937;
+            font-size: 2.25rem; /*text-4xl*/
+            font-weight: 700; /*font-bold*/
+            margin-bottom: 1.5rem; 
+            text-align: center;
+        }
+        .recipe-item{
+            display: flex;
+            align-items: center;/*alinha verticalmente imagem e texto*/
+            gap: 1rem; /*espaçamento entre imagem e texto*/
+            margin-bottom: 1.5rem; /*espaçamento entre receitas*/
+        }
+        .recipe-item img{
+            width: 96px; /*w-24*/
+            height: 96px; /*h-24*/
+            object-fit: cover; /*cobre o espaço da imagem mantendo a proporção*/
+            border-radius: 0.5rem; /*rounded-md*/
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1)0 1px 2px 0 rgba(0, 0, 0, alpha); /*shadow-sm*/
+        }
+        .recipe-content{
+            flex-grow: 1   ; /*ocupa o espaço restante*/
+        }
+        h2{
+            font-size: 1.5rem; /*text-2xl*/
+            font-weight: 600; /*font-semibold*/
+            color: #1f2937; /*text-gray-900*/
+            margin-bottom: 0.75rem; /*mb-2*/
+            margin-top: 0; /*remove o margin-top padrao do h2*/
+        }
+        h2 a{
+            color: #4f46e5;
+            text-decoration: none; /*remove underline*/
+            transition: color 0.2s ease-in-out; /*transição suave*/
+        }
+        h2 a:hover{
+            color: #3730a3; /*text-indigo-800*/
+            text-decoration: underline; /*sublinhado ao passar o mouse*/
+        }
+        p{
+            margin-bottom: 0.5rem; /*mb-2*/
+        }
+        strong{
+            font-weight: 600; 
+        }
+        hr{ 
+            border-top: 1px solid #e5e7eb; /*border-gray-200*/
+            margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .empty-message{
+            text-align: center;
+            font-style: italic;
+            color: #6b7280;
+            padding: 1rem;
+            border: 1px dashed #d1d5db;
+            border-radius: 0.5rem; /*text-gray-500*/
+            margin-top: 2rem
+        }
+
+    </style>
 </head>
 <body>
-    <h1>Receitas Cadastradas</h1>
+    <div class="container">
+        <h1>Receitas Cadastradas</h1>
 
-    {% for recipe in recipes %}
-        
-        <h2>{{ recipe.title }}</h2>
-        
-        {% if recipe.image %}
-            <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}" style="max-width: 300px; max-height: 200px;">
-        {% else %}
-            <p><em>Imagem não disponível</em></p>
-        {% endif %}
+        {% for recipe in recipes %}
+            <div class="recipe-item">   
 
-        <p><strong>Tempo de Preparo: </strong>{{ recipe.cooking_time }} minutos</p>
-        <p><strong>Ingredientes: </strong>{{ recipe.ingredients }}</p>
-        <p><strong>Instruções: </strong>{{ recipe.instructions }}</p>
-        
-        <hr>
+                {% if recipe.image %}
+                <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}" style="max-width: 300px; max-height: 200px;">
+            {% else %}
+                <p><em>Imagem não disponível</em></p>
+            {% endif %}
 
+            <div class="recipe-content">
+                <h2><a href="{% url 'recipe_detail' recipe.pk %}"></a></h2>
+
+            
+            <p><strong>Tempo de Preparo: </strong>{{ recipe.cooking_time }} minutos</p>
+            <p><strong>Ingredientes: </strong>{{ recipe.ingredients }}</p>
+            <p><strong>Instruções: </strong>{{ recipe.instructions }}</p>
+            
+            </div>
+            <h2>{{ recipe.title }}</h2>
+            
+            
+
+            
+            
+            <hr>
+    </div>
     {% empty %}
         <p>Nenhuma receita cadastrada.</p>
     {% endfor %}
+    
 </body>
 </html>
